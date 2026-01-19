@@ -1,17 +1,26 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Копируем файл проекта и восстанавливаем зависимости
-COPY src/CsvApi.API/CsvApi.API.csproj .
-RUN dotnet restore
+# Copy solution and project files
+COPY src/CsvApi.sln .
+COPY src/CsvApi.API/*.csproj src/CsvApi.API/
+COPY src/CsvApi.Application/*.csproj src/CsvApi.Application/
+COPY src/CsvApi.Domain/*.csproj src/CsvApi.Domain/
+COPY src/CsvApi.Infrastructure/*.csproj src/CsvApi.Infrastructure/
 
-# Копируем остальной код
-COPY src/CsvApi.API/ .
-RUN dotnet publish -c Release -o out
+# Restore packages
+RUN dotnet restore CsvApi.sln
 
-# Финальный образ
+# Copy everything else
+COPY . .
+
+# Build and publish only the API project
+WORKDIR /app/src/CsvApi.API
+RUN dotnet publish -c Release -o /out
+
+# Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/out .
+COPY --from=build /out .
 EXPOSE 80
 ENTRYPOINT ["dotnet", "CsvApi.API.dll"]

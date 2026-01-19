@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CsvApi.Domain\CsvApi.Domain.csproj" />
+    <ProjectReference Include="..\CsvApi.Application\CsvApi.Application.csproj" />
+  </ItemGroup>
+
 </Project>

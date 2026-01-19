@@ -1,3 +1,5 @@
+var addProcessUsecase = new CsvApi.Application.AddProcessUsecase(null, null, null, null, null);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
