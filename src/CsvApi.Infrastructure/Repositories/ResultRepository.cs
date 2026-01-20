@@ -53,6 +53,14 @@ public class ResultRepository : IResultRepository
             .ToArray();
     }
 
+    public Result[] FindByAverageExecutionTime(double min, double max)
+    {
+        return _context.Results
+            .Where(r => r.AverageExecutionTime >= min && 
+                        r.AverageExecutionTime <= max)
+            .ToArray();
+    }
+
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);
