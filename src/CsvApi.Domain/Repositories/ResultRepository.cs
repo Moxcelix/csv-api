@@ -6,6 +6,7 @@ public interface IResultRepository
     public Result GetResultByProcessId(Guid id);
     public Result[] FindByProcessName(string name);
     public Result[] FindByFirstOperationTime(DateTime start, DateTime end);
+    public Result[] FindByMean(double min, double max);
     public void CreateResult(Result result);
     public void UpdateResult(Result result);
 }

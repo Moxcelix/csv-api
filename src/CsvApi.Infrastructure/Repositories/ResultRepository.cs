@@ -44,7 +44,15 @@ public class ResultRepository : IResultRepository
                         r.FirstOperationTime <= endUtc)
             .ToArray();
     }
-    
+
+    public Result[] FindByMean(double min, double max)
+    {
+        return _context.Results
+            .Where(r => r.ValueMean >= min && 
+                        r.ValueMean <= max)
+            .ToArray();
+    }
+
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);
