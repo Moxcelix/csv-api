@@ -4,7 +4,7 @@ namespace CsvApi.Domain;
 
 public class ResultFactory
 {
-    public Result Create(Process process, Operation[] operations)
+    public Result Create(Process process)
     {
         return new Result()
         {

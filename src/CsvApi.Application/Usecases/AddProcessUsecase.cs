@@ -11,6 +11,7 @@ public class AddProcessUsecase
     private readonly ProcessBindService _bindService;
     private readonly ResultFactory _resultFactory;
     private readonly IResultRepository _resultRepository;
+    private readonly ResultCalculateService _resultCalculateService;
 
     public AddProcessUsecase(
         IProcessRepository processRepository,
@@ -19,7 +20,8 @@ public class AddProcessUsecase
         ResultFactory resultFactory,
         IResultRepository resultRepository,
         ProcessFactory processFactory,
-        ProcessBindService bindService
+        ProcessBindService bindService,
+        ResultCalculateService resultCalculateService
     )
     {
         _processRepository = processRepository;
@@ -29,6 +31,7 @@ public class AddProcessUsecase
         _resultRepository = resultRepository;
         _processFactory = processFactory;
         _bindService = bindService;
+        _resultCalculateService = resultCalculateService;
     }
 
     public void Execute(CsvDTO csv)
@@ -47,19 +50,26 @@ public class AddProcessUsecase
         }
 
         var process = _processRepository.GetProcessByName(csv.Name);
+        var operationArray = operations.ToArray();
 
         if (process == null)
         {
             process = _processFactory.Create(csv.Name);
-            _bindService.Bind(process, operations);
+            _bindService.Bind(process, operationArray);
+            var result = _resultFactory.Create(process);
+            _resultCalculateService.CalculateResult(result, operationArray);
             _processRepository.CreateProcess(process);
-            _operationRepository.CreateOperations(operations.ToArray());
+            _operationRepository.CreateOperations(operationArray);
+            _resultRepository.CreateResult(result);
         }
         else
         {
-            _bindService.Bind(process, operations);
+            _bindService.Bind(process, operationArray);
+            var result = _resultRepository.GetResultByProcessId(process.Id);
+            _resultCalculateService.CalculateResult(result, operationArray);
             _operationRepository.DeleteOperationsByProcessId(process.Id);
-            _operationRepository.CreateOperations(operations.ToArray());
+            _operationRepository.CreateOperations(operationArray);
+            _resultRepository.UpdateResult(result);
         }
     }
 }

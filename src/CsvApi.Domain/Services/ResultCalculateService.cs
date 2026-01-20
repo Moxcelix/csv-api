@@ -2,7 +2,7 @@ namespace CsvApi.Domain;
 
 public class ResultCalculateService
 {
-    public void CalculateResult(Result result)
+    public void CalculateResult(Result result, Operation[] operations)
     {
         result.DeltaTime = GetDeltaTime(operations);
         result.FirstOperationTime = GetFirstOperatationDateTime(operations);

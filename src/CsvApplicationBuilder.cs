@@ -23,10 +23,13 @@ public class CsvApplicationBuilder
         _builder.Services.AddScoped<AppDbContext>();
         _builder.Services.AddScoped<IProcessRepository, ProcessRepository>();
         _builder.Services.AddScoped<IOperationRepository, OperationRepository>();
+        _builder.Services.AddScoped<IResultRepository, ResultRepository>();
         
         // Domain
         _builder.Services.AddScoped<OperationFactory>();
         _builder.Services.AddScoped<ProcessFactory>();
+        _builder.Services.AddScoped<ResultFactory>();
+        _builder.Services.AddScoped<ResultCalculateService>();
         _builder.Services.AddScoped<ProcessBindService>();
         
         // Application

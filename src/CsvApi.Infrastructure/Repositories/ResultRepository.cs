@@ -18,7 +18,7 @@ public class ResultRepository : IResultRepository
             .FirstOrDefault(r => r.Id == id);
     }
 
-    public Result GetResultByProcessId(Guid id)
+    public Result GetResultByProcessId(Guid processId)
     {
         return _context.Results
             .FirstOrDefault(r => r.ProcessId == processId);
