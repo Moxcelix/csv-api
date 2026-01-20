@@ -10,12 +10,14 @@ public class AddProcessUsecase
     private readonly ProcessFactory _processFactory;
     private readonly ProcessBindService _bindService;
     private readonly ResultFactory _resultFactory;
+    private readonly IResultRepository _resultRepository;
 
     public AddProcessUsecase(
         IProcessRepository processRepository,
         IOperationRepository operationRepository,
         OperationFactory operationFactory,
         ResultFactory resultFactory,
+        IResultRepository resultRepository,
         ProcessFactory processFactory,
         ProcessBindService bindService
     )
@@ -24,6 +26,7 @@ public class AddProcessUsecase
         _operationRepository = operationRepository;
         _operationFactory = operationFactory;
         _resultFactory = resultFactory;
+        _resultRepository = resultRepository;
         _processFactory = processFactory;
         _bindService = bindService;
     }
