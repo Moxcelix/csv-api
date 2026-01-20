@@ -13,7 +13,7 @@ public class Routes
            .Accepts<IFormFile>("multipart/form-data");
 
         app.MapGet("/csv/health", () =>
-            Results.Ok(new { status = "OK", service = "CSV Processor" }))
+            Results.Ok(new { status = "OK", service = "CSV Api" }))
         .WithName("HealthCheck")
         .WithOpenApi();
     }

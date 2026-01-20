@@ -18,6 +18,13 @@ public class CsvController
 
     public async Task<IResult> UploadCsv(IFormFile file)
     {
+        var fileName = file.FileName.ToLowerInvariant();
+
+        if (!fileName.EndsWith(".csv"))
+        {
+            return Results.BadRequest("Unsorted file type.");
+        }
+
         try
         {
             if (file?.Length == 0) return Results.BadRequest("File is required");

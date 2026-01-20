@@ -1,6 +1,0 @@
-@CsvApi.API_HostAddress = http://localhost:5150
-
-GET {{CsvApi.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
