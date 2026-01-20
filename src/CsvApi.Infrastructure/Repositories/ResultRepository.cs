@@ -33,6 +33,18 @@ public class ResultRepository : IResultRepository
                   (r, p) => r)
             .ToArray();
     }
+
+    public Result[] FindByFirstOperationTime(DateTime start, DateTime end)
+    {
+        var startUtc = start.ToUniversalTime();
+        var endUtc = end.ToUniversalTime();
+
+        return _context.Results
+            .Where(r => r.FirstOperationTime >= startUtc &&
+                        r.FirstOperationTime <= endUtc)
+            .ToArray();
+    }
+    
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);
