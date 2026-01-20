@@ -14,7 +14,7 @@ public class Result
 
     public double ValueMean { get; set; }
     
-    public double ValuseMedian { get; set; }
+    public double ValueMedian { get; set; }
 
     public double ValueMin { get; set; }
 
