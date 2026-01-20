@@ -24,6 +24,15 @@ public class ResultRepository : IResultRepository
             .FirstOrDefault(r => r.ProcessId == processId);
     }
 
+    public Result[] FindByProcessName(string name)
+    {
+        return _context.Results
+            .Join(_context.Processes.Where(p => p.Name.Contains(name)),
+                  r => r.ProcessId,
+                  p => p.Id,
+                  (r, p) => r)
+            .ToArray();
+    }
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);
