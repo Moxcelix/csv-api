@@ -2,9 +2,9 @@ namespace CsvApi.Domain;
 
 public class Result
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
-    public string ProcessId { get; set; }
+    public Guid ProcessId { get; set; }
 
     public double DeltaTime { get; set; }
 

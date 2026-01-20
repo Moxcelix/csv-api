@@ -6,7 +6,7 @@ public class ProcessFactory
     {
         return new Process
         {
-            Id = $"process_{DateTime.UtcNow:yyyyMMddHHmmssfff}_{Guid.NewGuid():N8}",
+            Id = Guid.NewGuid(),
             Name = name,
         };
     }

@@ -8,7 +8,7 @@ public class OperationFactory
 
         return new Operation
         {
-            Id = $"operation_{DateTime.UtcNow:yyyyMMddHHmmssfff}_{Guid.NewGuid():N8}",
+            Id = Guid.NewGuid(),
             StartDate = startDate,
             ExecutionTimeSeconds = executionTimeSeconds,
             Value = value,

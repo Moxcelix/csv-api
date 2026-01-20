@@ -1,46 +1,50 @@
-var addProcessUsecase = new CsvApi.Application.AddProcessUsecase(null, null, null, null, null);
+using CsvApi.Infrastructure;
+using CsvApi.Domain;
+using CsvApi.Application;
+using CsvApi.API;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Infra
+builder.Services.AddSingleton<Env>();
+builder.Services.AddScoped<AppDbContext>();
+builder.Services.AddScoped<IProcessRepository, ProcessRepository>();
+builder.Services.AddScoped<IOperationRepository, OperationRepository>();
+// Domain
+builder.Services.AddScoped<OperationFactory>();
+builder.Services.AddScoped<ProcessFactory>();
+builder.Services.AddScoped<ProcessBindService>();
+// Application
+builder.Services.AddScoped<AddProcessUsecase>();
+// Api
+builder.Services.AddScoped<CsvController>();
+
+builder.Services.AddSingleton<Routes>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = long.MaxValue; 
+    options.MemoryBufferThreshold = int.MaxValue;
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
-var summaries = new[]
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var routes = scope.ServiceProvider.GetRequiredService<Routes>();
+    routes.Setup(app);
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated();
+}
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
