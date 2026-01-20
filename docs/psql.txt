@@ -1,0 +1,8 @@
+docker exec -it csv-api_postgres_1 psql -U postgres -d csvapi
+
+\dt
+SELECT * FROM "Processes";
+SELECT * FROM "Operations" LIMIT 10;
+SELECT * FROM "Results";
+SELECT COUNT(*) FROM "Operations";
+\q
