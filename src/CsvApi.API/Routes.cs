@@ -34,6 +34,14 @@ public class Routes
            .Produces<FindResultResponseDTO>(200)
            .Produces(400);
 
+        app.MapGet("/values/last",
+            ([FromServices] LastValuesController controller, [FromQuery] string? processName) =>
+                controller.GetLastValues(processName))
+           .WithName("LastValues")
+           .WithOpenApi()
+           .Produces<LastValuesResponseDTO>(200)
+           .Produces(400);
+
         app.MapGet("/csv/health", () =>
             Results.Ok(new { status = "OK", service = "CSV Api" }))
         .WithName("HealthCheck")

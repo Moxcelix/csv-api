@@ -37,10 +37,12 @@ public class CsvApplicationBuilder
         // Application
         _builder.Services.AddScoped<AddProcessUsecase>();
         _builder.Services.AddScoped<FindResultUsecase>();
+        _builder.Services.AddScoped<GetLastValuesUsecase>();
         
         // API
         _builder.Services.AddScoped<CsvController>();
         _builder.Services.AddScoped<FindController>();
+        _builder.Services.AddScoped<LastValuesController>();
         _builder.Services.AddSingleton<Routes>();
         
         // Framework services
