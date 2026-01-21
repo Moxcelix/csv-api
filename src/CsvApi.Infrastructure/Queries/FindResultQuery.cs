@@ -12,12 +12,12 @@ public class FindResultQuery : IFindResultQuery
         _context = context;
     }
 
-    public (Result result, Process processes)[] FindByFilter(ResultFilter filter)
+    public (Result result, Process process)[] FindByFilter(ResultFilter filter)
     {
         var query = from result in _context.Results
                     join process in _context.Processes
                     on result.ProcessId equals process.Id
-                    select new { Result = result, ProcessName = process.Name };
+                    select new { Result = result, Process = process };
 
         if (!string.IsNullOrEmpty(filter.ProcessName))
         {

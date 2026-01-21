@@ -1,6 +1,6 @@
-namespace CsvDomain;
+namespace CsvApi.Domain;
 
 public interface IFindResultQuery
 {
-    public (Result result, Process[] processes) FindByFilter(ResultFilter filter);
+    public (Result result, Process process)[] FindByFilter(ResultFilter filter);
 }

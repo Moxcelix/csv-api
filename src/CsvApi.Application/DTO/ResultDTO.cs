@@ -2,12 +2,12 @@ namespace CsvApi.Application;
 
 public struct ResultDTO
 {
-    public string ProcessName;
-    public double DeltaTime;
-    public DateTime FirstOperationTime;
-    public double AverageExecutionTime;
-    public double ValueMean;
-    public double ValueMedian;
-    public double ValueMin;
-    public double ValueMax;
+    public string ProcessName { get; set; }
+    public double DeltaTime { get; set; }
+    public DateTime FirstOperationTime { get; set; }
+    public double AverageExecutionTime { get; set; }
+    public double ValueMean { get; set; }
+    public double ValueMedian { get; set; }
+    public double ValueMin { get; set; }
+    public double ValueMax { get; set; }
 }

@@ -1,3 +1,5 @@
+using CsvApi.Domain;
+
 namespace CsvApi.Application;
 
 public class FindResultUsecase
@@ -13,32 +15,32 @@ public class FindResultUsecase
     {
         var filter = new ResultFilter()
         {
-            ProcessName = requestDTO.name,
-            FirstOperationTimeStart = requestDTO.startTime,
-            FirstOperationTimeEnd = requestDTO.endTime,
-            MinMeanValue = requestDTO.minValue,
-            MaxMeanValue = requestDTO.maxValue,
-            MinAvgExecutionTime = requestDTO.minExecutionTime,
-            MaxAvgExecutionTime = requestDTO.maxExecutionTime,
-            Page = requestDTO.page,
-            PageSize = requestDTO.PageSize
+            ProcessName = requestDTO.Name,
+            FirstOperationTimeStart = requestDTO.StartTime,
+            FirstOperationTimeEnd = requestDTO.EndTime,
+            MinMeanValue = requestDTO.MinValue,
+            MaxMeanValue = requestDTO.MaxValue,
+            MinAvgExecutionTime = requestDTO.MinExecutionTime,
+            MaxAvgExecutionTime = requestDTO.MaxExecutionTime,
+            Page = requestDTO.Page ?? 0,
+            PageSize = requestDTO.PageSize ?? 0
         };
 
         var results = _findQuery.FindByFilter(filter);
         var resultDTOs = new List<ResultDTO>();
 
-        foreach (var result in results)
+        foreach (var (result, process) in results)
         {
             resultDTOs.Add(new ResultDTO()
             {
-                ProcessName = result.Process.Name,
-                DeltaTime = result.Result.DeltaTime,
-                FirstOperationTime = result.Result.FirstOperationTime,
-                AverageExecutionTime = result.Result.AverageExecutionTime,
-                ValueMean = result.Result.ValueMean,
-                ValueMedian = result.Result.ValueMedian,
-                ValueMin = result.Result.ValueMin,
-                ValueMax = result.Result.ValueMax,
+                ProcessName = process.Name,
+                DeltaTime = result.DeltaTime, 
+                FirstOperationTime = result.FirstOperationTime,
+                AverageExecutionTime = result.AverageExecutionTime,
+                ValueMean = result.ValueMean,
+                ValueMedian = result.ValueMedian,
+                ValueMin = result.ValueMin,
+                ValueMax = result.ValueMax,
             });
         }
 
