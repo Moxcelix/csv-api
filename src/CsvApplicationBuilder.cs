@@ -25,6 +25,7 @@ public class CsvApplicationBuilder
         _builder.Services.AddScoped<IOperationRepository, OperationRepository>();
         _builder.Services.AddScoped<IResultRepository, ResultRepository>();
         _builder.Services.AddScoped<IFindResultQuery, FindResultQuery>();
+        _builder.Services.AddScoped<ILastValuesQuery, LastValuesQuery>();
         
         // Domain
         _builder.Services.AddScoped<OperationFactory>();
