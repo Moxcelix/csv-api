@@ -23,44 +23,7 @@ public class ResultRepository : IResultRepository
         return _context.Results
             .FirstOrDefault(r => r.ProcessId == processId);
     }
-
-    public Result[] FindByProcessName(string name)
-    {
-        return _context.Results
-            .Join(_context.Processes.Where(p => p.Name.Contains(name)),
-                  r => r.ProcessId,
-                  p => p.Id,
-                  (r, p) => r)
-            .ToArray();
-    }
-
-    public Result[] FindByFirstOperationTime(DateTime start, DateTime end)
-    {
-        var startUtc = start.ToUniversalTime();
-        var endUtc = end.ToUniversalTime();
-
-        return _context.Results
-            .Where(r => r.FirstOperationTime >= startUtc &&
-                        r.FirstOperationTime <= endUtc)
-            .ToArray();
-    }
-
-    public Result[] FindByMean(double min, double max)
-    {
-        return _context.Results
-            .Where(r => r.ValueMean >= min && 
-                        r.ValueMean <= max)
-            .ToArray();
-    }
-
-    public Result[] FindByAverageExecutionTime(double min, double max)
-    {
-        return _context.Results
-            .Where(r => r.AverageExecutionTime >= min && 
-                        r.AverageExecutionTime <= max)
-            .ToArray();
-    }
-
+    
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);

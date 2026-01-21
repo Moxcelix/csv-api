@@ -9,5 +9,8 @@ public class FindResultUsecase
         _resultRepository = resultRepository;
     }
 
-    public 
+    public FindResultResponseDTO Execute(FindResultRequestDTO requestDTO)
+    {
+        return new FindResultResponseDTO();
+    }
 }
