@@ -1,5 +1,0 @@
-moxcelix@moxcelix-BMH-WCX9:~/Documents/projects/csv-api/docker/CsvApi$ dotnet new sln -n CsvApi
-moxcelix@moxcelix-BMH-WCX9:~/Documents/projects/csv-api/docker/CsvApi$ dotnet new classlib -n CsvApi.Application -f net8.0
-moxcelix@moxcelix-BMH-WCX9:~/Documents/projects/csv-api/docker/CsvApi$ dotnet new classlib -n CsvApi.Domain -f net8.0
-moxcelix@moxcelix-BMH-WCX9:~/Documents/projects/csv-api/docker/CsvApi$ dotnet new classlib -n CsvApi.Infrastructure -f net8.0
-
