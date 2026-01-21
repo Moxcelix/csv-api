@@ -11,42 +11,24 @@ public class GetLastValuesUsecase
         _lastValuesQuery = lastValuesQuery;
     }
 
-    public FindResultResponseDTO Execute(FindResultRequestDTO requestDTO)
+    public LastValuesResponseDTO Execute(string processName)
     {
-        var filter = new ResultFilter()
-        {
-            ProcessName = requestDTO.Name,
-            FirstOperationTimeStart = requestDTO.StartTime,
-            FirstOperationTimeEnd = requestDTO.EndTime,
-            MinMeanValue = requestDTO.MinValue,
-            MaxMeanValue = requestDTO.MaxValue,
-            MinAvgExecutionTime = requestDTO.MinExecutionTime,
-            MaxAvgExecutionTime = requestDTO.MaxExecutionTime,
-            Page = requestDTO.Page ?? 0,
-            PageSize = requestDTO.PageSize ?? 0
-        };
+        var values = _lastValuesQuery.FindValues(processName);
+        var valuesDTOs = new List<ValueDTO>();
 
-        var results = _lastValuesQuery.FindByFilter(filter);
-        var resultDTOs = new List<ResultDTO>();
-
-        foreach (var (result, process) in results)
+        foreach (var val in values)
         {
-            resultDTOs.Add(new ResultDTO()
+            valuesDTOs.Add(new ValueDTO()
             {
-                ProcessName = process.Name,
-                DeltaTime = result.DeltaTime, 
-                FirstOperationTime = result.FirstOperationTime,
-                AverageExecutionTime = result.AverageExecutionTime,
-                ValueMean = result.ValueMean,
-                ValueMedian = result.ValueMedian,
-                ValueMin = result.ValueMin,
-                ValueMax = result.ValueMax,
+                StartDate = val.StartDate,
+                ExecutionTimeSeconds = val.ExecutionTimeSeconds,
+                Value = val.Value
             });
         }
 
-        return new FindResultResponseDTO()
+        return new LastValuesResponseDTO()
         {
-            Results = resultDTOs.ToArray()
+            Values = valuesDTOs.ToArray()
         };
     }
 }
