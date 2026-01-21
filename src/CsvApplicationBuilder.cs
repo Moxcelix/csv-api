@@ -24,6 +24,8 @@ public class CsvApplicationBuilder
         _builder.Services.AddScoped<IProcessRepository, ProcessRepository>();
         _builder.Services.AddScoped<IOperationRepository, OperationRepository>();
         _builder.Services.AddScoped<IResultRepository, ResultRepository>();
+        _builder.Services.AddScoped<IFindResultQuery, FindResultQuery>();
+        _builder.Services.AddScoped<ILastValuesQuery, LastValuesQuery>();
         
         // Domain
         _builder.Services.AddScoped<OperationFactory>();
@@ -34,9 +36,13 @@ public class CsvApplicationBuilder
         
         // Application
         _builder.Services.AddScoped<AddProcessUsecase>();
+        _builder.Services.AddScoped<FindResultUsecase>();
+        _builder.Services.AddScoped<GetLastValuesUsecase>();
         
         // API
         _builder.Services.AddScoped<CsvController>();
+        _builder.Services.AddScoped<FindController>();
+        _builder.Services.AddScoped<LastValuesController>();
         _builder.Services.AddSingleton<Routes>();
         
         // Framework services

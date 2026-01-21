@@ -23,7 +23,7 @@ public class ResultRepository : IResultRepository
         return _context.Results
             .FirstOrDefault(r => r.ProcessId == processId);
     }
-
+    
     public void CreateResult(Result result)
     {
         _context.Results.Add(result);
